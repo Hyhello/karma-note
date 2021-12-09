@@ -1,6 +1,6 @@
 // Karma configuration
-// Generated on Wed Dec 08 2021 18:22:24 GMT+0800 (中国标准时间)
-
+// Generated on Thu Dec 09 2021 16:21:05 GMT+0800 (中国标准时间)
+const { babel } = require('@rollup/plugin-babel');
 module.exports = function(config) {
   config.set({
 
@@ -12,9 +12,10 @@ module.exports = function(config) {
     // available frameworks: https://www.npmjs.com/search?q=keywords:karma-adapter
     frameworks: ['mocha', 'chai'],
 
+
     // list of files / patterns to load in the browser
     files: [
-      "tests/*.js"
+      'tests/*.spec.js'
     ],
 
 
@@ -26,7 +27,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://www.npmjs.com/search?q=keywords:karma-preprocessor
     preprocessors: {
-      "tests/*.js": ['rollup']
+      "tests/*.spec.js": ['rollup']
     },
 
     rollupPreprocessor: {
@@ -34,19 +35,21 @@ module.exports = function(config) {
 			 * This is just a normal Rollup config object,
 			 * except that `input` is handled for you.
 			 */
-			plugins: [],
-			output: {
-				format: 'iife', // Helps prevent naming collisions.
-        name: 'utils',
-				sourcemap: 'inline', // Sensible for testing.
-			},
+			plugins: [
+        babel({ babelHelpers: 'runtime', plugins: ['@babel/plugin-transform-runtime', 'babel-plugin-istanbul'] })
+      ]
 		},
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://www.npmjs.com/search?q=keywords:karma-reporter
-    reporters: ['progress'],
-
+    reporters: ['mocha', 'coverage'],
+    coverageReporter: {
+      reporters:[
+        {type: 'html', dir:'coverage/'},
+        {type: 'text-summary'}
+      ]
+    },
 
     // web server port
     port: 9876,
@@ -62,12 +65,13 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers
     // available browser launchers: https://www.npmjs.com/search?q=keywords:karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
+
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

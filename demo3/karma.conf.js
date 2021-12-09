@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Wed Dec 08 2021 18:22:24 GMT+0800 (中国标准时间)
+// Generated on Thu Dec 09 2021 15:56:42 GMT+0800 (中国标准时间)
 
 module.exports = function(config) {
   config.set({
@@ -12,9 +12,10 @@ module.exports = function(config) {
     // available frameworks: https://www.npmjs.com/search?q=keywords:karma-adapter
     frameworks: ['mocha', 'chai'],
 
+
     // list of files / patterns to load in the browser
     files: [
-      "tests/*.js"
+      'tests/*.js'
     ],
 
 
@@ -29,24 +30,11 @@ module.exports = function(config) {
       "tests/*.js": ['rollup']
     },
 
-    rollupPreprocessor: {
-			/**
-			 * This is just a normal Rollup config object,
-			 * except that `input` is handled for you.
-			 */
-			plugins: [],
-			output: {
-				format: 'iife', // Helps prevent naming collisions.
-        name: 'utils',
-				sourcemap: 'inline', // Sensible for testing.
-			},
-		},
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://www.npmjs.com/search?q=keywords:karma-reporter
-    reporters: ['progress'],
-
+    reporters: ['progress', 'mocha'],
 
     // web server port
     port: 9876,
@@ -62,12 +50,13 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers
     // available browser launchers: https://www.npmjs.com/search?q=keywords:karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
+
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
