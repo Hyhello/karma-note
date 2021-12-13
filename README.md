@@ -1,1 +1,1 @@
-# karma 使用 demo
+# karma + mocha + chai + rollup + typescript 简单使用
