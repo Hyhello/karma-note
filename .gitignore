@@ -10,6 +10,7 @@ yarn-error.log*
 /tests/e2e/reports/
 /docs/.temp
 selenium-debug.log
+/coverage/
 
 # Editor directories and files
 .idea

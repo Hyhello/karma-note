@@ -1,7 +1,9 @@
 // Karma configuration
 // Generated on Thu Dec 09 2021 16:21:05 GMT+0800 (中国标准时间)
 const { babel } = require('@rollup/plugin-babel');
-const typescript = require('@rollup/plugin-typescript');
+const istanbul = require('rollup-plugin-istanbul');
+const { DEFAULT_EXTENSIONS } = require('@babel/core');
+const typescript = require('rollup-plugin-typescript2');
 
 module.exports = function(config) {
   config.set({
@@ -17,7 +19,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'tests/*.spec.ts'
+      {
+        pattern: 'tests/*.spec.ts',
+        watched: false
+      }
     ],
 
 
@@ -37,10 +42,15 @@ module.exports = function(config) {
 			 * This is just a normal Rollup config object,
 			 * except that `input` is handled for you.
 			 */
+      output: {
+        format: 'iife',
+				name: 'utils',
+				sourcemap: false,
+      },
 			plugins: [
-		    typescript({ sourceMap: false }),
-        require('rollup-plugin-istanbul')(),
-        babel({ babelHelpers: 'runtime', plugins: ['@babel/plugin-transform-runtime'] })
+		    typescript(),
+        istanbul(),
+        babel({ babelHelpers: 'runtime', plugins: ['@babel/plugin-transform-runtime'], extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'] })
       ]
 		},
 
@@ -74,7 +84,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://www.npmjs.com/search?q=keywords:karma-launcher
-    browsers: ['ChromeHeadless'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode
